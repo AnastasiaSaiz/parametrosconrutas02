@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Link, useParams } from "react-router-dom";
+import { useState } from "react";
+
+const Operaciones = () => {
+  const params = useParams()
+  const num1 = parseInt(params.num1)
+  const num2 = parseInt(params.num2)
+
+  return (
+    <>
+      <p>{num1 + num2}</p>
+      <p>{num1 - num2}</p>
+      <p>{num1 * num2}</p>
+      <p>{num1 / num2}</p>
+      <p>{num1 % num2}</p>
+
+    </>
+  )
+}
 
 function App() {
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+
+  const sumar1 = () => {
+    setNum1(num1 + 1)
+  }
+  const restar1 = () => {
+    setNum1(num1 - 1)
+  }
+
+  const sumar2 = () => {
+    setNum2(num2 + 2)
+  }
+  const restar2 = () => {
+    setNum2(num2 - 2)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <p>{num1}</p>
+      <button onClick={sumar1}>Sumar</button>
+      <button onClick={restar1}>Restar</button>
+      <p>{num2}</p>
+      <button onClick={sumar2}>Sumar</button>
+      <button onClick={restar2}>Restar</button>
+      <Link to={"/operaciones/" + num1 + "/" +num2}>Operaciones</Link >
+        <Route exact path="/operaciones/:num1/:num2">
+          <Operaciones />
+        </Route>
+    </BrowserRouter>
   );
 }
 
